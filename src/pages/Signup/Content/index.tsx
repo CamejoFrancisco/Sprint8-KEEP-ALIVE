@@ -3,7 +3,8 @@ import styled from "styled-components"
 import logo from "../../../assets/images/logoCompasso.png"
 import userIcon from "../../../assets/images/icon-user.svg";
 import iconPassword from "../../../assets/images/icon-password.svg";
-import { NavigateFunction, useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate, Link } from "react-router-dom";
+
 
 const Container = styled.div`
     width: 379px;
@@ -209,6 +210,18 @@ const ErrorMessage = styled.p`
     }
 `;
 
+const MovePage = styled.div`
+    margin: 28px auto 0;
+
+    width: 283px;
+    height: 40px;
+
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+`;
+
 const Button = styled.button`
     margin-top: 0px;
     width: 100%;
@@ -345,6 +358,7 @@ const SignUpContent = () => {
             <Button onClick={() => handlePress({ email, password, setValidation, navigate })}>
                 Continuar
             </Button>
+            <MovePage>Ja possui cadastro? <Link to="/login">LOGIN</Link></MovePage>
         </Container>
     )
 }
