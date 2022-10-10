@@ -12,22 +12,22 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true);
 
-    //Criando Usuário
+    
     function signup(email, password) {
         return auth.createUserWithEmailAndPassword(email, password)
     }
 
-    //Login 
+    
     function login(email, password) {
         return auth.signInWithEmailAndPassword(email, password)
     }
 
-    //logout 
+    
     function logout() {
         return auth.signOut()
     }
 
-    //logout 
+     
     function resetPassword(email) {
         return auth.sendPasswordResetEmail(email)
     }

@@ -3,7 +3,9 @@ import styled from "styled-components"
 import logo from "../../../assets/images/logoCompasso.png"
 import userIcon from "../../../assets/images/icon-user.svg";
 import iconPassword from "../../../assets/images/icon-password.svg";
+import { useAuth } from "../../../context/AuthContext";
 import { NavigateFunction, useNavigate, Link } from "react-router-dom";
+import { Alert } from "react-bootstrap";
 
 
 const Container = styled.div`
@@ -276,21 +278,7 @@ interface HandlePressType {
     navigate: NavigateFunction
 }
 
-function handlePress({email, password, passwordConfirm, setValidation, navigate}: HandlePressType) {
 
-
-    if (password !== 
-        passwordConfirm) {
-            return console.log("PASSWORDS DO NOT MATCH");
-        }
-
-    if (!email.includes('@') || password.length < 4) {
-        setValidation(false);
-    } else {
-        setValidation(true);
-        navigate("/home");
-    }
-}
 
 const SignUpContent = () => {
     const [email, setEmail] = useState("");
@@ -299,7 +287,37 @@ const SignUpContent = () => {
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
     const [validation, setValidation] = useState(true);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const { signup } = useAuth()
+
+    async function handlePress({email, password, passwordConfirm, setValidation, navigate}: HandlePressType) {
     
+        if (password !== 
+            passwordConfirm) {
+                return setError("As senhas devem ser iguais")
+            }
+    
+        if (!email.includes('@') || password.length < 4) {
+            setValidation(false);
+        } else {
+            setValidation(true);
+            navigate("/home");
+        }
+    
+        try {
+            setError('');
+            setLoading(true);
+            await signup(email, password)
+        }   catch(error) {
+                setError('Não foi possível criar uma conta');
+                console.log(error);     
+        }
+        setLoading(false);  
+        
+    }
+
     const navigate = useNavigate();
 
     return (
@@ -308,7 +326,7 @@ const SignUpContent = () => {
             {/*<Greeting>Olá,</Greeting>*/}
             {/*<MainParagraph>Para continuar navegando efetue seu cadastro na rede.</MainParagraph>*/}
             <SignUpTag>Sign Up</SignUpTag>
-
+            {error && <Alert variant="danger">{error}</Alert>}
             <InputContainer>
                 <Input
                     type="text"
@@ -367,7 +385,7 @@ const SignUpContent = () => {
             <ErrorMessage className={validation ? undefined : "invalid"}>
                 Ops, usuário ou senha inválidos. Tente novamente!
             </ErrorMessage>
-            <Button onClick={() => handlePress({ email, password, passwordConfirm, setValidation, navigate })}>
+            <Button disabled={loading} onClick={() => handlePress({ email, password, passwordConfirm, setValidation, navigate })}>
                 Continuar
             </Button>
             <MovePage>Ja possui cadastro? <Link to="/login">LOGIN</Link></MovePage>
