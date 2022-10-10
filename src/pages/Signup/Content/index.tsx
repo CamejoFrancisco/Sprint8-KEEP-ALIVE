@@ -294,12 +294,14 @@ const SignUpContent = () => {
 
     async function handlePress({email, password, passwordConfirm, setValidation, navigate}: HandlePressType) {
     
+        const pw = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/);
+
         if (password !== 
             passwordConfirm) {
-                return setError("As senhas devem ser iguais")
+                return alert("As senhas devem ser iguais")
             }
     
-        if (!email.includes('@') || password.length < 6) {
+        if (!email.includes('@') || !pw.test(password)) {
             setValidation(false);
         } else {
             setValidation(true);
