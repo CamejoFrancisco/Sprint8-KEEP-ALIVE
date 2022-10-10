@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components"
-import logo from "../../../assets/images/logoCompasso.png";
+import logo from "../../../assets/images/logoCompasso.png"
 import userIcon from "../../../assets/images/icon-user.svg";
 import iconPassword from "../../../assets/images/icon-password.svg";
 import { NavigateFunction, useNavigate } from "react-router-dom";
@@ -73,16 +73,13 @@ const Greeting = styled.p`
         font-size: 45px;
         margin-top: 0;
        
-    }
-
-    
-
+    }  
     
 `;
 
 
-const LoginTag = styled.p`
-    margin-top: 135px;
+const SignUpTag = styled.p`
+    margin-top: 15px;
 
     font-size: 30px;
     font-weight: 400;
@@ -213,7 +210,7 @@ const ErrorMessage = styled.p`
 `;
 
 const Button = styled.button`
-    margin-top: 67px;
+    margin-top: 0px;
     width: 100%;
     height: 67px;
     
@@ -274,7 +271,7 @@ function handlePress({email, password, setValidation, navigate}: HandlePressType
     }
 }
 
-const LoginContent = () => {
+const SignUpContent = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [validation, setValidation] = useState(true);
@@ -283,14 +280,36 @@ const LoginContent = () => {
     return (
         <Container>
             <SmallResImg src={logo}/>
-            <Greeting>Olá,</Greeting>
-            <MainParagraph>Para continuar navegando de forma segura, efetue o login na rede.</MainParagraph>
-            <LoginTag>Login</LoginTag>
+            {/*<Greeting>Olá,</Greeting>*/}
+            {/*<MainParagraph>Para continuar navegando efetue seu cadastro na rede.</MainParagraph>*/}
+            <SignUpTag>Sign Up</SignUpTag>
 
             <InputContainer>
                 <Input
                     type="text"
-                    placeholder="Usuário"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={validation ? undefined : "invalid"}
+                />
+                <Icon src={userIcon} />
+            </InputContainer>
+
+            <InputContainer>
+                <Input
+                    type="text"
+                    placeholder="Nome"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={validation ? undefined : "invalid"}
+                />
+                <Icon src={userIcon} />
+            </InputContainer>
+
+            <InputContainer>
+                <Input
+                    type="text"
+                    placeholder="Sobrenome"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className={validation ? undefined : "invalid"}
@@ -308,6 +327,18 @@ const LoginContent = () => {
                 />
                 <Icon src={iconPassword} />
             </InputContainer>
+
+            <InputContainer>
+                <Input
+                    type="password"
+                    placeholder="Repetir senha"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className={validation ? undefined : "invalid"}
+                />
+                <Icon src={iconPassword} />
+            </InputContainer>
+
             <ErrorMessage className={validation ? undefined : "invalid"}>
                 Ops, usuário ou senha inválidos. Tente novamente!
             </ErrorMessage>
@@ -320,4 +351,4 @@ const LoginContent = () => {
 
 
 
-export default LoginContent;
+export default SignUpContent;
