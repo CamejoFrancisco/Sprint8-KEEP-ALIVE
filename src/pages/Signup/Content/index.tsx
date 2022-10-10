@@ -80,7 +80,8 @@ const Greeting = styled.p`
 
 
 const SignUpTag = styled.p`
-    margin-top: 15px;
+    margin-top: 19px;
+    margin-top: 34px;
 
     font-size: 30px;
     font-weight: 400;
@@ -286,8 +287,12 @@ function handlePress({email, password, setValidation, navigate}: HandlePressType
 
 const SignUpContent = () => {
     const [email, setEmail] = useState("");
+    const [nome, setNome] = useState("");
+    const [sobrenome, setSobrenome] = useState("");
     const [password, setPassword] = useState("");
+    const [passwordConfirm, setPasswordConfirm] = useState("");
     const [validation, setValidation] = useState(true);
+    
     const navigate = useNavigate();
 
     return (
@@ -312,8 +317,8 @@ const SignUpContent = () => {
                 <Input
                     type="text"
                     placeholder="Nome"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
                     className={validation ? undefined : "invalid"}
                 />
                 <Icon src={userIcon} />
@@ -323,8 +328,8 @@ const SignUpContent = () => {
                 <Input
                     type="text"
                     placeholder="Sobrenome"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={sobrenome}
+                    onChange={(e) => setSobrenome(e.target.value)}
                     className={validation ? undefined : "invalid"}
                 />
                 <Icon src={userIcon} />
@@ -345,8 +350,8 @@ const SignUpContent = () => {
                 <Input
                     type="password"
                     placeholder="Repetir senha"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={passwordConfirm}
+                    onChange={(e) => setPasswordConfirm(e.target.value)}
                     className={validation ? undefined : "invalid"}
                 />
                 <Icon src={iconPassword} />
