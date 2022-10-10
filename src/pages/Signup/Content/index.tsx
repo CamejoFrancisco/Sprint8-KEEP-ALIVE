@@ -299,23 +299,23 @@ const SignUpContent = () => {
                 return setError("As senhas devem ser iguais")
             }
     
-        if (!email.includes('@') || password.length < 4) {
+        if (!email.includes('@') || password.length < 6) {
             setValidation(false);
         } else {
             setValidation(true);
-            navigate("/home");
+
+            try {
+                setError('');
+                setLoading(true);
+                await signup(email, password)
+                navigate("/");
+            }   catch(error) {
+                    setError('Não foi possível criar uma conta');
+                    console.log(error);     
+            }
+            setLoading(false);   
         }
-    
-        try {
-            setError('');
-            setLoading(true);
-            await signup(email, password)
-        }   catch(error) {
-                setError('Não foi possível criar uma conta');
-                console.log(error);     
-        }
-        setLoading(false);  
-        
+       
     }
 
     const navigate = useNavigate();
@@ -326,7 +326,7 @@ const SignUpContent = () => {
             {/*<Greeting>Olá,</Greeting>*/}
             {/*<MainParagraph>Para continuar navegando efetue seu cadastro na rede.</MainParagraph>*/}
             <SignUpTag>Sign Up</SignUpTag>
-            {error && <Alert variant="danger">{error}</Alert>}
+            
             <InputContainer>
                 <Input
                     type="text"
@@ -381,7 +381,7 @@ const SignUpContent = () => {
                 />
                 <Icon src={iconPassword} />
             </InputContainer>
-
+            {error && <Alert variant="danger">{error}</Alert>}
             <ErrorMessage className={validation ? undefined : "invalid"}>
                 Ops, usuário ou senha inválidos. Tente novamente!
             </ErrorMessage>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useAuth } from "../../../context/AuthContext";
 
 const FooterContainer = styled.div`
     width: 100vw;
@@ -145,13 +146,19 @@ const LinkContainer = styled.div<LinkContainerType>`
 `;
 
 const HomeFooter = () => {
+    const { currentUser, logout } = useAuth();
 
     function redirect (){
         window.open("http://www.google.com.uy");
     }
 
-    function logout() {
-        navigate("/login");
+    async function handleLogOut() {
+        try{
+            await logout()
+            navigate("/login")
+        } catch(err){
+            console.log(err);
+        }
     }
 
     const [timer, setTimer] = useState<number>(60);
@@ -159,7 +166,7 @@ const HomeFooter = () => {
     
     useEffect(() => {
         if (timer === 0) {
-            logout();
+            handleLogOut();
             return;
         }
         setTimeout(() => {setTimer(prevTimer => prevTimer -1)}, 1000);
@@ -184,7 +191,7 @@ const HomeFooter = () => {
                 <a onClick={redirect}>Continuar Navegando</a>
             </LinkContainer>
             <LinkContainer>
-                <a onClick={logout}>Logout</a>
+                <a onClick={handleLogOut}>Logout</a>
             </LinkContainer>
         </FooterContainer>
     )

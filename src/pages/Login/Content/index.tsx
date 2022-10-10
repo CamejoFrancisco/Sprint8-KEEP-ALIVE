@@ -4,6 +4,8 @@ import logo from "../../../assets/images/logoCompasso.png";
 import userIcon from "../../../assets/images/icon-user.svg";
 import iconPassword from "../../../assets/images/icon-password.svg";
 import { NavigateFunction, useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
+import { Alert } from "react-bootstrap";
 
 const Container = styled.div`
     width: 379px;
@@ -276,21 +278,39 @@ interface HandlePressType {
     navigate: NavigateFunction
 }
 
-function handlePress({email, password, setValidation, navigate}: HandlePressType) {
-
-    if (!email.includes('@') || password.length < 4) {
-        setValidation(false);
-    } else {
-        setValidation(true);
-        navigate("/home");
-    }
-}
 
 const LoginContent = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [validation, setValidation] = useState(true);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    const { login } = useAuth()
+
+    async function handlePress({email, password, setValidation, navigate}: HandlePressType) {
+
+        if (!email.includes('@') || password.length < 6) {
+            setValidation(false);
+        } else {
+            setValidation(true);
+
+            try {
+                setError('');
+                setLoading(true);
+                await login(email, password)
+                navigate("/");
+            }   catch(error) {
+                    setError('Não foi possível efetuar o login');
+                    console.log(error);     
+            }
+            setLoading(false);  
+            
+        }
+
+        
+    }
 
     return (
         <Container>
@@ -298,7 +318,7 @@ const LoginContent = () => {
             <Greeting>Olá,</Greeting>
             <MainParagraph>Para continuar navegando de forma segura, efetue o login na rede.</MainParagraph>
             <LoginTag>Login</LoginTag>
-
+            
             <InputContainer>
                 <Input
                     type="text"
@@ -323,6 +343,7 @@ const LoginContent = () => {
             <ErrorMessage className={validation ? undefined : "invalid"}>
                 Ops, usuário ou senha inválidos. Tente novamente!
             </ErrorMessage>
+            {error && <Alert variant="danger">{error}</Alert>}
             <Button onClick={() => handlePress({ email, password, setValidation, navigate })}>
                 Continuar
             </Button>
