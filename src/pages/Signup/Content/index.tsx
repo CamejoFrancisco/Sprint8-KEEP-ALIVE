@@ -271,11 +271,18 @@ const Button = styled.button`
 interface HandlePressType {
     email: string,
     password: string,
+    passwordConfirm: string,
     setValidation: React.Dispatch<React.SetStateAction<boolean>>,
     navigate: NavigateFunction
 }
 
-function handlePress({email, password, setValidation, navigate}: HandlePressType) {
+function handlePress({email, password, passwordConfirm, setValidation, navigate}: HandlePressType) {
+
+
+    if (password !== 
+        passwordConfirm) {
+            return console.log("PASSWORDS DO NOT MATCH");
+        }
 
     if (!email.includes('@') || password.length < 4) {
         setValidation(false);
@@ -360,7 +367,7 @@ const SignUpContent = () => {
             <ErrorMessage className={validation ? undefined : "invalid"}>
                 Ops, usuário ou senha inválidos. Tente novamente!
             </ErrorMessage>
-            <Button onClick={() => handlePress({ email, password, setValidation, navigate })}>
+            <Button onClick={() => handlePress({ email, password, passwordConfirm, setValidation, navigate })}>
                 Continuar
             </Button>
             <MovePage>Ja possui cadastro? <Link to="/login">LOGIN</Link></MovePage>
