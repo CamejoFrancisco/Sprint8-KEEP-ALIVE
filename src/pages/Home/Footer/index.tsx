@@ -147,6 +147,7 @@ const LinkContainer = styled.div<LinkContainerType>`
 
 const HomeFooter = () => {
     const { currentUser, logout } = useAuth();
+    const navigate = useNavigate();
 
     function redirect (){
         window.open("http://www.google.com.uy");
@@ -157,12 +158,13 @@ const HomeFooter = () => {
             await logout()
             navigate("/login")
         } catch(err){
-            console.log(err);
+            {/*console.log(err);*/}
+            alert(err);
         }
     }
 
     const [timer, setTimer] = useState<number>(60);
-    const navigate = useNavigate();
+    
     
     useEffect(() => {
         if (timer === 0) {
