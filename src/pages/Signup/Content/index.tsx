@@ -298,11 +298,12 @@ const SignUpContent = () => {
     const [passwordLength, setPasswordLength] = useState(false);
     const [containsNumbers, setContainsNumbers] = useState(false);
     const [containsUppercase, setContainsUppercase] = useState(false);
+    const [containsLowercase, setContainsLowercase] = useState(false);
     const [containsSpecialChar, setContainsSpecialChar] = useState(false);
 
     function handleChange(password:string) {
         console.log(password);
-        setPasswordConfirm(password);
+        setPassword(password);
         
 
         //Check > 6 characters
@@ -317,6 +318,10 @@ const SignUpContent = () => {
         var uppercaseVerification = password.match(/[A-Z]/);
         setContainsUppercase(uppercaseVerification != null ? true : false);
 
+        //Check for Lowercase
+        var lowercaseVerification = password.match(/[a-z]/);
+        setContainsLowercase(lowercaseVerification != null ? true : false);
+
         //Check for special characters
         var symbols = new RegExp(/[^A-Z a-z 0-9]/);
         setContainsSpecialChar(symbols.test(password) ? true : false);
@@ -324,15 +329,21 @@ const SignUpContent = () => {
 
     async function handleSubmit({email, password, passwordConfirm, setValidation, navigate}: HandleSubmitType) {
     
-        const pw = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/);
+        {/*const pw = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/);*/}
 
 
         {/*if (password !== 
             passwordConfirm) {
                 return alert("As senhas devem ser iguais")
             }*/}
+
+        if(email.includes('@') && passwordLength && containsNumbers && containsUppercase && containsLowercase && containsSpecialChar){
+            alert("Cadastrado")
+        }else{
+            alert("Não cadastrado")
+        }   
     
-        if (!email.includes('@') || !pw.test(password)) {
+        /*if (!email.includes('@') || !pw.test(password)) {
             setValidation(false);
             alert("Senha deve ser >= 6 caracteres, 1 número, 1 letra maiúscula, 1 minúscula, 1 caractere especial")
         } else {
@@ -348,7 +359,7 @@ const SignUpContent = () => {
                     console.log(error);     
             }
             setLoading(false);   
-        }
+        }*/
        
     }
 
@@ -399,7 +410,7 @@ const SignUpContent = () => {
                     type="password"
                     placeholder="Senha"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => handleChange(e.target.value)}
                     className={validation ? undefined : "invalid"}
                 />
                 <Icon src={iconPassword} />
@@ -410,7 +421,7 @@ const SignUpContent = () => {
                     type="password"
                     placeholder="Repetir senha"
                     value={passwordConfirm}
-                    onChange={(e) => handleChange(e.target.value)}
+                    onChange={(e) => setPasswordConfirm(e.target.value)}
                     className={validation ? undefined : "invalid"}
                 />
                 <Icon src={iconPassword} />
@@ -422,6 +433,7 @@ const SignUpContent = () => {
                     <div className={passwordLength ? 'green' : ''}>Contém pelo menos 6 caracteres.</div>
                     <div className={containsNumbers ? 'green' : ''}>Contém 1 número</div>
                     <div className={containsUppercase ? 'green' : ''}>Contém 1 letra maiúscula.</div>
+                    <div className={containsLowercase ? 'green' : ''}>Contém 1 letra minúscula.</div>
                     <div className={containsSpecialChar ? 'green' : ''}>Contém caractere especial</div>
                 </div>
             </div>
