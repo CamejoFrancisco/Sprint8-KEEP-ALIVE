@@ -304,7 +304,7 @@ const LoginContent = () => {
                 await login(email, password)
                 navigate("/home");
             }   catch(error) {
-                    alert('Email ou senha não cadastrados no sistema');
+                    //alert('Email ou senha não cadastrados no sistema');
                     setValidation(false);
                     console.log(error);     
             }
