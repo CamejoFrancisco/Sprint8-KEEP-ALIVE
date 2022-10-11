@@ -27,6 +27,9 @@
     font-weight: bold;
     color: green;
     transition: all 1s;
+    transition: transform 1s ease-in-out;
+    transform: translateX(40px);
+    
 }
 
 .Submit {
