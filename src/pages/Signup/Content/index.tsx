@@ -83,8 +83,8 @@ const Greeting = styled.p`
 
 
 const SignUpTag = styled.p`
-    margin-top: 14px;
-    margin-bottom: 19px;
+    margin-top: 19px;
+    margin-bottom: 35px;
 
     font-size: 30px;
     font-weight: 400;
@@ -300,6 +300,7 @@ const SignUpContent = () => {
     const [containsUppercase, setContainsUppercase] = useState(false);
     const [containsLowercase, setContainsLowercase] = useState(false);
     const [containsSpecialChar, setContainsSpecialChar] = useState(false);
+    const [passwordsMatch, setPasswordsMatch] = useState(false);
 
     function handleChange(password:string) {
         console.log(password);
@@ -308,7 +309,6 @@ const SignUpContent = () => {
 
         //Check > 6 characters
         setPasswordLength(password.length > 5 ? true : false)
-
         
         //Check for numbers
         var numbersVerification = password.match(/\d+/g);
@@ -332,15 +332,28 @@ const SignUpContent = () => {
         {/*const pw = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/);*/}
 
 
-        {/*if (password !== 
+        if (password !== 
             passwordConfirm) {
                 return alert("As senhas devem ser iguais")
-            }*/}
+            }else{
+                setPasswordsMatch(true);
+            }
 
         if(email.includes('@') && passwordLength && containsNumbers && containsUppercase && containsLowercase && containsSpecialChar){
-            alert("Cadastrado")
+            try {
+                setError('');
+                setLoading(true);
+                await signup(email, password)
+                navigate("/home");
+                alert('Cadastro feito com sucesso!')
+            }   catch(error) {
+                    alert('Não foi possível criar uma conta');
+                    console.log(error);     
+            }
+            setLoading(false);
+
         }else{
-            alert("Não cadastrado")
+            alert("Verifique os dados")
         }   
     
         /*if (!email.includes('@') || !pw.test(password)) {
@@ -427,7 +440,6 @@ const SignUpContent = () => {
                 <Icon src={iconPassword} />
             </InputContainer>
 
-            <div className="title">Password Checker</div>
             <div className="content">
                 <div>
                     <div className={passwordLength ? 'green' : ''}>Contém pelo menos 6 caracteres.</div>
