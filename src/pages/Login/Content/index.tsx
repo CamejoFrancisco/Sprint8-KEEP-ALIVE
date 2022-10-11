@@ -291,7 +291,7 @@ const LoginContent = () => {
 
     async function handlePress({email, password, setValidation, navigate}: HandlePressType) {
 
-        const pw = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/);
+        const pw = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Z a-z 0-9]).{6,}$/);
         
         if (!email.includes('@') || !pw.test(password)) {
             setValidation(false);
@@ -304,7 +304,7 @@ const LoginContent = () => {
                 await login(email, password)
                 navigate("/home");
             }   catch(error) {
-                    //alert('Email ou senha não cadastrados no sistema');
+                    alert('Email ou senha não cadastrados no sistema');
                     setValidation(false);
                     console.log(error);     
             }

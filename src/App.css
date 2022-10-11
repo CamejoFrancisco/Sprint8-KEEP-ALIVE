@@ -9,26 +9,14 @@
     
 }
 
-.title {
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    border-top: 4px solid #ddd;
-    border-left: 4px solid #ddd;
-    border-right: 4px solid #ddd;
-    background-color: rgb(48, 74, 145);
-    color: #fff;
-    padding: 15px;
-    font-weight: bold;
-    text-align: center;
-}
 
 .content {
-    border-bottom: 4px solid #ddd;
-    border-left: 4px solid #ddd;
-    border-right:4x solid #ddd;
+    border-bottom: 4px solid  rgb(28, 28, 28);
+    border-left: 4px solid  rgb(28, 28, 28);
+    border-right:4x solid  rgb(28, 28, 28);
     padding: 15px;
-    background-color: #fff;
-    color: black;
+    background-color: rgb(28, 28, 28);
+    color: white;
 }
 
 .green {

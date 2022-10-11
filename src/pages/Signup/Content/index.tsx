@@ -83,8 +83,8 @@ const Greeting = styled.p`
 
 
 const SignUpTag = styled.p`
-    margin-top: 19px;
-    margin-bottom: 35px;
+    margin-top: 35px;
+    margin-bottom: 15px;
 
     font-size: 30px;
     font-weight: 400;
@@ -130,7 +130,7 @@ const Icon = styled.img`
 
     position: absolute;
     right: -38px;
-    bottom: 20px;
+    bottom: 35px;
     //border: 1px solid red;
     transition: 500ms;
 
@@ -229,7 +229,7 @@ const MovePage = styled.div`
 `;
 
 const Button = styled.button`
-    margin-top: 15px;
+    margin-top: 30px;
     width: 100%;
     height: 67px;
     
@@ -301,6 +301,7 @@ const SignUpContent = () => {
     const [containsLowercase, setContainsLowercase] = useState(false);
     const [containsSpecialChar, setContainsSpecialChar] = useState(false);
     const [passwordsMatch, setPasswordsMatch] = useState(false);
+    const [buttonStatus, setButtonStatus] = useState(false);
 
     function handleChange(password:string) {
         console.log(password);
@@ -329,8 +330,6 @@ const SignUpContent = () => {
 
     async function handleSubmit({email, password, passwordConfirm, setValidation, navigate}: HandleSubmitType) {
     
-        {/*const pw = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/);*/}
-
 
         if (password !== 
             passwordConfirm) {
@@ -339,7 +338,7 @@ const SignUpContent = () => {
                 setPasswordsMatch(true);
             }
 
-        if(email.includes('@') && passwordLength && containsNumbers && containsUppercase && containsLowercase && containsSpecialChar){
+        if(email.includes('@') && passwordsMatch && passwordLength && containsNumbers && containsUppercase && containsLowercase && containsSpecialChar){
             try {
                 setError('');
                 setLoading(true);
