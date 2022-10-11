@@ -456,7 +456,7 @@ const SignUpContent = () => {
             <Button disabled={loading} onClick={() => handleSubmit({ email, password, passwordConfirm, setValidation, navigate })}>
                 Continuar
             </Button>
-            <MovePage>Já possui cadastro? <Link to="/">LOGIN</Link></MovePage>
+            <MovePage>Já possui cadastro? <Link className="link" to="/">LOGIN</Link></MovePage>
         </Container>
     )
 }

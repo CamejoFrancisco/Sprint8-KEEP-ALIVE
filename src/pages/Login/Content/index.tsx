@@ -350,7 +350,7 @@ const LoginContent = () => {
             <Button onClick={() => handlePress({ email, password, setValidation, navigate })}>
                 Continuar
             </Button>
-            <ChangePage>Você não possui cadastro? <Link to="/signup">SIGN UP</Link></ChangePage>
+            <ChangePage>Você não possui cadastro? <Link className="link" to="/signup">SIGN UP</Link></ChangePage>
         </Container>
     )
 }
