@@ -26,6 +26,7 @@
 .green {
     font-weight: bold;
     color: green;
+    transition: all 1s;
 }
 
 .Submit {
