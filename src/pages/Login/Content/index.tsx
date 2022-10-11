@@ -215,7 +215,7 @@ const ErrorMessage = styled.p`
 `;
 
 const Button = styled.button`
-    margin-top: 67px;
+    margin-top: 47px;
     width: 100%;
     height: 67px;
     
@@ -302,9 +302,10 @@ const LoginContent = () => {
                 setError('');
                 setLoading(true);
                 await login(email, password)
-                navigate("/");
+                navigate("/home");
             }   catch(error) {
-                    alert('Email ou senha não cadastrados no sistema');
+                    //alert('Email ou senha não cadastrados no sistema');
+                    setValidation(false);
                     console.log(error);     
             }
             setLoading(false);  

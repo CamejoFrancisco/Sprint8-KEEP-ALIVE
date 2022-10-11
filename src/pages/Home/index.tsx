@@ -8,6 +8,7 @@ import Relogio from "./Relogio";
 import { Clima } from "./Clima";
 import HomeFooter from "./Footer";
 
+
 const HomeContainer = styled.div`
     width: 100vw;
     height: 100vh;
@@ -61,6 +62,7 @@ const Temperature = styled.img`
 `;
 
 export default function Home() {
+    
     return (
         <>
             <GlobalStyle />

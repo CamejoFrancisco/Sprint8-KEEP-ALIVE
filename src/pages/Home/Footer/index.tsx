@@ -178,6 +178,8 @@ const HomeFooter = () => {
     
     return (
         <FooterContainer>
+            <div></div>
+            
             <Disclaimer>
                 Essa janela do navegador é usada para manter sua sessão de autenticação ativa. Deixe-a aberta em segundo plano e abra uma nova janela para continuar a navegar.
             </Disclaimer>

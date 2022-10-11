@@ -1,0 +1,48 @@
+
+.App {
+    color: #000;
+    display: table;
+    margin: 10% auto 0;
+    width: 100%;
+    max-width: 300px;
+    text-align: left;
+    
+}
+
+.title {
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top: 4px solid #ddd;
+    border-left: 4px solid #ddd;
+    border-right: 4px solid #ddd;
+    background-color: rgb(48, 74, 145);
+    color: #fff;
+    padding: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.content {
+    border-bottom: 4px solid #ddd;
+    border-left: 4px solid #ddd;
+    border-right:4x solid #ddd;
+    padding: 15px;
+    background-color: #fff;
+    color: black;
+}
+
+.green {
+    font-weight: bold;
+    color: green;
+}
+
+.Submit {
+    background-color: #204ba7;
+    color: white;
+    padding: 10px;
+}
+
+.Submit:disabled{
+    cursor: not-allowed;
+    background-color: gray;
+}

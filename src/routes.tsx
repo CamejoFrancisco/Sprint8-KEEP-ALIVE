@@ -13,8 +13,7 @@ function App() {
       <Router>
         <AuthProvider>
           <Routes>
-            <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
-            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             {/*<Route path="/login" element={<Login />} />*/}
@@ -29,23 +28,3 @@ function App() {
 
 export default App;
 
-{/*const router = createBrowserRouter([
-  {
-    path: "/login", element: <Login />,
-  }, {
-    path: "/home", element: <Home />,
-  },{
-    path: "/signup", element: <Signup />,
-  }, {
-    path: "/", element: <Navigate to="/login"></Navigate>
-  }
-]);
-
-const Router = () => {
-  return (
-    <RouterProvider router={router} />
-
-  )
-}
-
-export default Router;*/}

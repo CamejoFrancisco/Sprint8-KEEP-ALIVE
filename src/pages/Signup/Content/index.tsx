@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import '../../../App.css'
 import styled from "styled-components"
 import logo from "../../../assets/images/logoCompasso.png"
 import userIcon from "../../../assets/images/icon-user.svg";
@@ -10,7 +11,7 @@ import { Alert } from "react-bootstrap";
 
 const Container = styled.div`
     width: 379px;
-    height: 100vh;
+    height: 1000px;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -82,8 +83,8 @@ const Greeting = styled.p`
 
 
 const SignUpTag = styled.p`
-    margin-top: 19px;
-    margin-top: 34px;
+    margin-top: 14px;
+    margin-bottom: 19px;
 
     font-size: 30px;
     font-weight: 400;
@@ -149,7 +150,8 @@ const Icon = styled.img`
 `;
 
 const Input = styled.input`
-    margin-top: 32px;
+    
+    margin-bottom: 15px; 
     width: 100%;
     height: 60px;
 
@@ -164,6 +166,7 @@ const Input = styled.input`
     font-weight: 400;
     line-height: 20px;
     color: #E0E0E0;
+
 
     @media screen and (min-width: 768px){
         
@@ -226,7 +229,7 @@ const MovePage = styled.div`
 `;
 
 const Button = styled.button`
-    margin-top: 0px;
+    margin-top: 15px;
     width: 100%;
     height: 67px;
     
@@ -270,7 +273,7 @@ const Button = styled.button`
    
 `;
 
-interface HandlePressType {
+interface HandleSubmitType {
     email: string,
     password: string,
     passwordConfirm: string,
@@ -289,20 +292,49 @@ const SignUpContent = () => {
     const [validation, setValidation] = useState(true);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-
     const { signup } = useAuth()
 
-    async function handlePress({email, password, passwordConfirm, setValidation, navigate}: HandlePressType) {
+    //Checklist password verification
+    const [passwordLength, setPasswordLength] = useState(false);
+    const [containsNumbers, setContainsNumbers] = useState(false);
+    const [containsUppercase, setContainsUppercase] = useState(false);
+    const [containsSpecialChar, setContainsSpecialChar] = useState(false);
+
+    function handleChange(password:string) {
+        console.log(password);
+        setPasswordConfirm(password);
+        
+
+        //Check > 6 characters
+        setPasswordLength(password.length > 5 ? true : false)
+
+        
+        //Check for numbers
+        var numbersVerification = password.match(/\d+/g);
+        setContainsNumbers(numbersVerification != null ? true : false);
+
+        //Check for Uppercase
+        var uppercaseVerification = password.match(/[A-Z]/);
+        setContainsUppercase(uppercaseVerification != null ? true : false);
+
+        //Check for special characters
+        var symbols = new RegExp(/[^A-Z a-z 0-9]/);
+        setContainsSpecialChar(symbols.test(password) ? true : false);
+    }
+
+    async function handleSubmit({email, password, passwordConfirm, setValidation, navigate}: HandleSubmitType) {
     
         const pw = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/);
 
-        if (password !== 
+
+        {/*if (password !== 
             passwordConfirm) {
                 return alert("As senhas devem ser iguais")
-            }
+            }*/}
     
         if (!email.includes('@') || !pw.test(password)) {
             setValidation(false);
+            alert("Senha deve ser >= 6 caracteres, 1 número, 1 letra maiúscula, 1 minúscula, 1 caractere especial")
         } else {
             setValidation(true);
 
@@ -310,7 +342,7 @@ const SignUpContent = () => {
                 setError('');
                 setLoading(true);
                 await signup(email, password)
-                navigate("/");
+                navigate("/home");
             }   catch(error) {
                     setError('Não foi possível criar uma conta');
                     console.log(error);     
@@ -378,19 +410,30 @@ const SignUpContent = () => {
                     type="password"
                     placeholder="Repetir senha"
                     value={passwordConfirm}
-                    onChange={(e) => setPasswordConfirm(e.target.value)}
+                    onChange={(e) => handleChange(e.target.value)}
                     className={validation ? undefined : "invalid"}
                 />
                 <Icon src={iconPassword} />
             </InputContainer>
+
+            <div className="title">Password Checker</div>
+            <div className="content">
+                <div>
+                    <div className={passwordLength ? 'green' : ''}>Contém pelo menos 6 caracteres.</div>
+                    <div className={containsNumbers ? 'green' : ''}>Contém 1 número</div>
+                    <div className={containsUppercase ? 'green' : ''}>Contém 1 letra maiúscula.</div>
+                    <div className={containsSpecialChar ? 'green' : ''}>Contém caractere especial</div>
+                </div>
+            </div>
+
             {error && <Alert variant="danger">{error}</Alert>}
-            <ErrorMessage className={validation ? undefined : "invalid"}>
-                Ops, usuário ou senha inválidos. Tente novamente!
-            </ErrorMessage>
-            <Button disabled={loading} onClick={() => handlePress({ email, password, passwordConfirm, setValidation, navigate })}>
+            {/*<ErrorMessage className={validation ? undefined : "invalid"}>
+                Verifique os campos!
+            </ErrorMessage>*/}
+            <Button disabled={loading} onClick={() => handleSubmit({ email, password, passwordConfirm, setValidation, navigate })}>
                 Continuar
             </Button>
-            <MovePage>Ja possui cadastro? <Link to="/login">LOGIN</Link></MovePage>
+            <MovePage>Já possui cadastro? <Link to="/login">LOGIN</Link></MovePage>
         </Container>
     )
 }
